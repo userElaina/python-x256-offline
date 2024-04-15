@@ -1,0 +1,32 @@
+[project]
+name = "x256offline"
+version = "0.0.1"
+description = "quickly find the nearest xterm 256 color index of an RGB"
+readme = "README.rst"
+requires-python = ">=3.8"
+license = {file = "LICENSE"}
+keywords = ["x256", "xterm", "color"]
+
+authors = [
+  {name = "userElaina", email = "userelaina@pm.me" }
+]
+maintainers = [
+  {name = "userElaina", email = "userelaina@pm.me" }
+]
+
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/userElaina/python-x256-offline"
+"Bug Reports" = "https://github.com/userElaina/python-x256-offline/issues"
+"Source" = "https://github.com/userElaina/python-x256-offline"
+
+[tool.setuptools]
+package-data = {"x256offline" = ["*.bin"]}
+
+[build-system]
+requires = ["setuptools>=43.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
