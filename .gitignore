@@ -10,6 +10,10 @@ __pycache__/
 *.so
 *~
 
+# executable
+*.exe
+*.out
+
 # archive
 *.tar
 *.gz
