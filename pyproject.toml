@@ -1,6 +1,6 @@
 [project]
 name = "x256offline"
-version = "0.0.1"
+version = "0.0.2"
 description = "quickly find the nearest xterm 256 color index of an RGB"
 readme = "README.rst"
 requires-python = ">=3.8"
