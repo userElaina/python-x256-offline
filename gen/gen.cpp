@@ -88,8 +88,10 @@ inline int ed(int c0, int c1) {
 }
 
 int main(int argc, char** argv) {
-    FILE* wfp = fopen("./src/x256offline/weighted_euclidean_distance.bin", "wb");
-    FILE* efp = fopen("./src/x256offline/euclidean_distance.bin", "wb");
+    FILE* wfp256 = fopen("../src/x256offline/wed256.bin", "wb");
+    FILE* efp256 = fopen("../src/x256offline/ed256.bin", "wb");
+    FILE* wfp232 = fopen("../src/x256offline/wed232.bin", "wb");
+    FILE* efp232 = fopen("../src/x256offline/ed232.bin", "wb");
     for (int i = 0; i <= 0xffffff; i++) {
         const int c0 = i;
         int ww = 4 * 2 * 256 * 256 * 256 * 3, we = 256 * 256 * 3, wj = -1;
@@ -108,17 +110,24 @@ int main(int argc, char** argv) {
                 ee = ne;
                 ej = j;
             }
+            if (j == 231){
+                putc(wj, wfp232);
+                putc(ej, efp232);
+            }
         }
-        if (wj != ej) {
-            const int c0 = X256_RGB[wj];
-            if (is_gray(c0)) continue;
-            const int c1 = X256_RGB[ej];
-            if (is_gray(c1)) continue;
-            printf("%06x %06x %06x\n", i, c0, c1);
-        }
-        // putc(wj, wfp);
-        // putc(ej, efp);
+        // if (wj != ej) {
+        //     const int c0 = X256_RGB[wj];
+        //     if (is_gray(c0)) continue;
+        //     const int c1 = X256_RGB[ej];
+        //     if (is_gray(c1)) continue;
+        //     printf("%06x %06x %06x\n", i, c0, c1);
+        // }
+        putc(wj, wfp256);
+        putc(ej, efp256);
     }
-    fclose(wfp);
-    fclose(efp);
+    fclose(wfp256);
+    fclose(efp256);
+    fclose(wfp232);
+    fclose(efp232);
+    return 0;
 }
