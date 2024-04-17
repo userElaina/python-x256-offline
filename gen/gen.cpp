@@ -76,7 +76,7 @@ inline int ed(int r0, int g0, int b0, int r1, int g1, int b1) {
     return r * r + g * g + b * b;
 }
 
-inline int is_gray(int c){
+inline int is_gray(int c) {
     const int r = c >> 16;
     const int g = (c >> 8) & 0xff;
     const int b = c & 0xff;
@@ -88,14 +88,15 @@ inline int ed(int c0, int c1) {
 }
 
 int main(int argc, char** argv) {
-    FILE* fp256w = fopen("../src/x256offline/x256w.bin", "wb");
-    FILE* fp256e = fopen("../src/x256offline/x256e.bin", "wb");
-    FILE* fp232w = fopen("../src/x256offline/x232w.bin", "wb");
-    FILE* fp232e = fopen("../src/x256offline/x232e.bin", "wb");
+    // FILE* fp256w = fopen("../src/x256offline/x256w.bin", "wb");
+    // FILE* fp256e = fopen("../src/x256offline/x256e.bin", "wb");
+    // FILE* fp232w = fopen("../src/x256offline/x232w.bin", "wb");
+    // FILE* fp232e = fopen("../src/x256offline/x232e.bin", "wb");
     for (int i = 0; i <= 0xffffff; i++) {
         const int c0 = i;
         int ww = 4 * 2 * 256 * 256 * 256 * 3, we = 256 * 256 * 3, wj = -1;
         int ew = 4 * 2 * 256 * 256 * 256 * 3, ee = 256 * 256 * 3, ej = -1;
+        int eq_flg = 0;
         for (int j = 0; j <= 0xff; j++) {
             const int c1 = X256_RGB[j];
             const int nw = wed(c0, c1);
@@ -110,24 +111,27 @@ int main(int argc, char** argv) {
                 ee = ne;
                 ej = j;
             }
-            if (j == 231){
-                putc(wj, fp232w);
-                putc(ej, fp232e);
+            if (j == 231) {
+                // putc(wj, fp232w);
+                // putc(ej, fp232e);
+                if (wj != ej) {
+                    eq_flg = 1;
+                }
             }
         }
-        // if (wj != ej) {
-        //     const int c0 = X256_RGB[wj];
-        //     if (is_gray(c0)) continue;
-        //     const int c1 = X256_RGB[ej];
-        //     if (is_gray(c1)) continue;
-        //     printf("%06x %06x %06x\n", i, c0, c1);
-        // }
-        putc(wj, fp256w);
-        putc(ej, fp256e);
+        // putc(wj, fp256w);
+        // putc(ej, fp256e);
+        if (eq_flg && wj != ej) {
+            const int c0 = X256_RGB[wj];
+            if (!is_gray(c0)) continue;
+            const int c1 = X256_RGB[ej];
+            if (!is_gray(c1)) continue;
+            printf("%06x %06x %06x\n", i, c0, c1);
+        }
     }
-    fclose(fp256w);
-    fclose(fp256e);
-    fclose(fp232w);
-    fclose(fp232e);
+    // fclose(fp256w);
+    // fclose(fp256e);
+    // fclose(fp232w);
+    // fclose(fp232e);
     return 0;
 }
