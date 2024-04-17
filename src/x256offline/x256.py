@@ -35,26 +35,29 @@ X256_RGB = [
     0xa8a8a8, 0xb2b2b2, 0xbcbcbc, 0xc6c6c6, 0xd0d0d0, 0xdadada, 0xe4e4e4, 0xeeeeee
 ]
 
-WED = 'weighted_euclidean_distance'
-ED = 'euclidean_distance'
+X232E = 'x232e'
+X232W = 'x232w'
+X256E = 'x256e'
+X256W = 'x256w'
+X256 = [X232E, X232W, X256E, X256W]
 
 DIRNAME = os.path.dirname(__file__)
 
-WED_BIN = os.path.join(DIRNAME, WED + '.bin')
-ED_BIN = os.path.join(DIRNAME, ED + '.bin')
-
 RGB_X256 = dict()
 
-with open(WED_BIN, 'rb') as f:
-    RGB_X256[WED] = [i for i in f.read()]
-
-with open(ED_BIN, 'rb') as f:
-    RGB_X256[ED] = [i for i in f.read()]
+for i in X256:
+    with open(os.path.join(DIRNAME, i + '.bin'), 'rb') as f:
+        RGB_X256[i] =  [j for j in f.read()]
 
 
-def from_rgb(r: int, g: int = -1, b: int = -1, weighted: bool = False) -> int:
+def from_rgb(
+    r: int, g: int = -1, b: int = -1,
+    weighted: bool = False,
+    n_color: int = 232
+) -> int:
     rgb = r if g == -1 else (r*0x10000 + g*0x100 + b)
-    return RGB_X256[WED if weighted else ED][rgb]
+    x = 'x%d%s' % (n_color, 'w' if weighted else 'e')
+    return RGB_X256[x][rgb]
 
 
 def to_rgb(x: int) -> int:
