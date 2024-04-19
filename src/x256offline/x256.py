@@ -1,4 +1,5 @@
 import os
+import zlib
 
 X256_RGB = [
     0x000000, 0x800000, 0x008000, 0x808000, 0x000080, 0x800080, 0x008080, 0xc0c0c0,
@@ -45,9 +46,12 @@ DIRNAME = os.path.dirname(__file__)
 
 RGB_X256 = dict()
 
-for i in X256:
-    with open(os.path.join(DIRNAME, i + '.bin'), 'rb') as f:
-        RGB_X256[i] =  [j for j in f.read()]
+with open(os.path.join(DIRNAME, 'x256.bin'), 'rb') as f:
+    data = zlib.decompress(f.read())
+    RGB_X256[X232E] = data[:0x1000000]
+    RGB_X256[X232W] = data[0x1000000:0x2000000]
+    RGB_X256[X256E] = data[0x2000000:0x3000000]
+    RGB_X256[X256W] = data[0x3000000:]
 
 
 def from_rgb(
