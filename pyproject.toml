@@ -1,6 +1,6 @@
 [project]
 name = "x256offline"
-version = "0.0.2"
+version = "0.0.3"
 description = "quickly find the nearest xterm 256 color index of an RGB"
 readme = "README.rst"
 requires-python = ">=3.8"
@@ -25,7 +25,7 @@ classifiers = [
 "Source" = "https://github.com/userElaina/python-x256-offline"
 
 [tool.setuptools]
-package-data = {"x256offline" = ["*.bin"]}
+package-data = {"x256offline" = ["x256.bin"]}
 
 [build-system]
 requires = ["setuptools>=43.0.0", "wheel"]
