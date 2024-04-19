@@ -36,22 +36,9 @@ X256_RGB = [
     0xa8a8a8, 0xb2b2b2, 0xbcbcbc, 0xc6c6c6, 0xd0d0d0, 0xdadada, 0xe4e4e4, 0xeeeeee
 ]
 
-X232E = 'x232e'
-X232W = 'x232w'
-X256E = 'x256e'
-X256W = 'x256w'
-X256 = [X232E, X232W, X256E, X256W]
-
-DIRNAME = os.path.dirname(__file__)
-
-RGB_X256 = dict()
-
-with open(os.path.join(DIRNAME, 'x256.bin'), 'rb') as f:
-    data = zlib.decompress(f.read())
-    RGB_X256[X232E] = data[:0x1000000]
-    RGB_X256[X232W] = data[0x1000000:0x2000000]
-    RGB_X256[X256E] = data[0x2000000:0x3000000]
-    RGB_X256[X256W] = data[0x3000000:]
+DATA = zlib.decompress(open(os.path.join(
+    os.path.dirname(__file__), 'x256.bin'
+), 'rb').read())
 
 
 def from_rgb(
@@ -59,9 +46,13 @@ def from_rgb(
     weighted: bool = False,
     n_color: int = 232
 ) -> int:
-    rgb = r if g == -1 else (r*0x10000 + g*0x100 + b)
-    x = 'x%d%s' % (n_color, 'w' if weighted else 'e')
-    return RGB_X256[x][rgb]
+    return DATA[(
+        r if g == -1 else (r*0x10000 + g*0x100 + b)
+    ) * 4 + (
+        2 if n_color == 256 else 0
+    ) + (
+        1 if weighted else 0
+    )]
 
 
 def to_rgb(x: int) -> int:
