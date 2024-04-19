@@ -1,19 +1,17 @@
 import x256offline as x256
 
 c0 = 0x297331
-x0e = x256.from_rgb(c0)
-x0w = x256.from_rgb(c0, weighted=True)
-x1e = x256.from_rgb(c0, n_color=256)
+x0e = x256.from_rgb(c0, weighted=False, n_color=232)
+x0w = x256.from_rgb(c0, weighted=True, n_color=232)
+x1e = x256.from_rgb(c0, weighted=False, n_color=256)
 x1w = x256.from_rgb(c0, weighted=True, n_color=256)
 
-print(hex(c0))
-print(x0e, hex(x256.to_rgb(x0e)))
-print(x0w, hex(x256.to_rgb(x0w)))
-print(x1e, hex(x256.to_rgb(x1e)))
-print(x1w, hex(x256.to_rgb(x1w)))
+print('%06x %d %06x %d %06x %d %06x %d %06x' % (
+    c0,
+    x0e, x256.to_rgb(x0e),
+    x0w, x256.to_rgb(x0w),
+    x1e, x256.to_rgb(x1e),
+    x1w, x256.to_rgb(x1w)
+))
 
-# 0x297331
-# 23 0x5f5f
-# 2 0x8000
-# 238 0x444444
-# 239 0x4e4e4e
+# 297331 23 005f5f 2 008000 238 444444 239 4e4e4e
