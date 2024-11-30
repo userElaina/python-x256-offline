@@ -1,3 +1,5 @@
+py1 -m pip install x256
+
 py1 -m pip uninstall x256offline
 py1 test.py
 
