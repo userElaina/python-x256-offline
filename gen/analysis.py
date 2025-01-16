@@ -50,7 +50,7 @@ for i in X256_RGB:
 # ffffff
 # 808080
 
-assert len(set(X256_RGB)) == 247
+assert len(set(X256_RGB)) == 256 - 9
 
 R = set()
 G = set()
